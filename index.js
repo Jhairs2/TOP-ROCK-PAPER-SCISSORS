@@ -4,7 +4,7 @@ const winners = {
   "scissors": "paper",
 };
 
-let humanScore, computerScore = 0;
+let humanScore = 0, computerScore = 0;
 
 
 function makeChoice(choice) {
@@ -45,6 +45,11 @@ function getHumanChoice() {
 
 function playRound(humanChoice, computerChoice) {
 
+    // Does this choice exist?
+    if(!winners[humanChoice]) {
+        console.log("Invalid choice!");
+        return playRound(getHumanChoice(), getComputerChoice());
+    }
     // Did player win?
     if(winners[humanChoice] === computerChoice) {
         humanScore++;
@@ -64,4 +69,18 @@ function playRound(humanChoice, computerChoice) {
 
 }
 
-playRound(getHumanChoice(), getComputerChoice());
+
+function playGame() {
+    for(let i = 0; i < 5; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+
+    if(humanScore > computerScore) {
+        console.log(`Congratulations! You won ${humanScore}-${computerScore}!`)
+    } else {
+        console.log(`Sorry! You lost ${humanScore}-${computerScore}!`)
+    }
+    
+}
+
+playGame();
